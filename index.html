@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ARAMEX Tracking</title>
+<title>ARamex Tracking</title>
 
 <style>
 body {
@@ -66,15 +66,17 @@ input {
     transition: width 3s linear;
 }
 
+/* STATUS RED */
 .status {
     font-size: 20px;
     font-weight: bold;
-    color: #00ff6a;
-    animation: glow 1.2s infinite alternate;
+    color: #ff3b3b;
+    animation: glowRed 1.2s infinite alternate;
 }
-@keyframes glow {
-    from { text-shadow: 0 0 5px #00ff6a; }
-    to { text-shadow: 0 0 20px #00ff6a; }
+
+@keyframes glowRed {
+    from { text-shadow: 0 0 5px #ff3b3b; }
+    to { text-shadow: 0 0 20px #ff0000; }
 }
 
 /* Route */
@@ -96,16 +98,7 @@ input {
     left: 10%;
     width: 80%;
     height: 4px;
-    background: linear-gradient(to right, #00ff6a, #00c6ff);
-}
-
-/* Aircraft */
-.aircraft {
-    position: absolute;
-    top: calc(50% - 14px);
-    left: 10%;
-    font-size: 28px;
-    transition: left 4s linear, transform 0.3s;
+    background: linear-gradient(to right, #ff3b3b, #ff9900);
 }
 
 .location {
@@ -177,12 +170,12 @@ input {
 <div id="result" class="section">
     <h1>ARamex</h1>
     <p><strong>Tracking ID:</strong> XX-UK-92502</p>
-    <div class="status">Status: In Transit</div>
+
+    <div class="status">Status: On Hold</div>
 
     <div class="route-container">
         <div class="map-box">
             <div class="route-path"></div>
-            <div id="aircraft" class="aircraft">✈️</div>
             <div class="location yemen">Yemen</div>
             <div class="location sa">South Africa</div>
             <div class="location bw">Botswana</div>
@@ -205,17 +198,16 @@ input {
 
         <div class="card">
             <h3>Shipment Information</h3>
-            <p>Current Location: on Route Hub</p>
+            <p>Current Location: South Africa</p>
             <p>Destination: Francistown, Botswana</p>
             <p>Shipment Type: Express AWB</p>
-            <p>Estimated Delivery: 24/48 hours</p>
+            <p>Customs Clearance: Not Yet Cleared</p>
+            <p>Estimated Delivery: Pending Clearance</p>
         </div>
     </div>
 </div>
 
 <script>
-let animationInterval;
-
 function goToTracking() {
     welcome.classList.remove("active");
     tracking.classList.add("active");
@@ -234,7 +226,6 @@ function track() {
         if (code.value.trim() === "XX-UK-92502") {
 
             result.classList.add("active");
-            startAircraft();
 
             document.querySelectorAll(".card").forEach((c, i) => {
                 setTimeout(() => c.classList.add("show"), i * 500);
@@ -245,27 +236,6 @@ function track() {
             error.innerText = "Invalid Tracking Code";
         }
     }, 3000);
-}
-
-function startAircraft() {
-    const plane = document.getElementById("aircraft");
-    let direction = 1;
-    let position = 10;
-
-    animationInterval = setInterval(() => {
-
-        if (direction === 1) {
-            position = 90;
-            plane.style.transform = "rotate(0deg)";
-        } else {
-            position = 10;
-            plane.style.transform = "rotate(180deg)";
-        }
-
-        plane.style.left = position + "%";
-        direction *= -1;
-
-    }, 4000);
 }
 </script>
 
